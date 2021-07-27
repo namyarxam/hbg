@@ -73,11 +73,7 @@ const Index = ({ liveData }) => {
             return (
               <Box key={member.name} mb="2em">
                 <Box textAlign="center">
-                  <Text
-                    fontFamily="copperplate"
-                    fontWeight="bold"
-                    color="white"
-                  >
+                  <Text fontWeight="bold" color="white">
                     {member.name}
                   </Text>
                 </Box>
