@@ -57,7 +57,7 @@ export const memberList = [
     name: "Reign",
     twitter: "0Reign",
     youtube: "https://www.youtube.com/user/ReignOfPowerade",
-    twitch: "Reignex",
+    twitch: "reignex",
   },
   {
     name: "Fireworkss",

@@ -14,25 +14,27 @@ const MediaButtons: React.FC<MediaButtonsProps> = ({
   twitch,
 }) => {
   return (
-    <Flex>
+    <Flex p="5px" mt="5px" justifyContent="center" cursor="pointer">
       <Box
-        _hover={{
-          borderBottom: "1px solid black",
+        onClick={() => {
+          window.open(`https://twitter.com/${twitter}`);
         }}
+        mr="10%"
       >
         <FaTwitter color="#1DA1F2" />
       </Box>
       <Box
-        _hover={{
-          borderBottom: "1px solid black",
+        onClick={() => {
+          window.open(youtube);
         }}
       >
         <FaYoutube color="#c4302b" />
       </Box>
       <Box
-        _hover={{
-          borderBottom: "1px solid black",
+        onClick={() => {
+          window.open(`https://www.twitch.tv/${twitch}`);
         }}
+        ml="10%"
       >
         <FaTwitch color="#6441a5" />
       </Box>
