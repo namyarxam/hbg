@@ -10,21 +10,19 @@ import { FaTwitter, FaCircle } from "react-icons/fa";
 const Index = ({ liveData }) => {
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     router.replace(router.asPath, null, {
-  //       scroll: false,
-  //     });
-  //   }, 30000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      router.replace(router.asPath, null, {
+        scroll: false,
+      });
+    }, 30000);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   const liveChannels = liveData.map((streamData: any) => {
     return streamData.user_login;
   });
-
-  console.log("livechannels", liveChannels);
 
   return (
     <>
