@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { FaTwitter, FaCircle } from "react-icons/fa";
+import Link from "next/link";
 
 const Index = ({ liveData }) => {
   const router = useRouter();
@@ -40,6 +41,7 @@ const Index = ({ liveData }) => {
             borderRadius="8px"
             border="2px solid black"
             src="/img/hbg_banner.jpeg"
+            margin="auto"
           />
           <Image
             m="auto"
@@ -61,9 +63,6 @@ const Index = ({ liveData }) => {
         </Box>
       </Flex>
       <Box backgroundImage="url(/img/stone4.jpg)" pb="2em">
-        {/* <Text pt="1em" ml="1em" fontSize="30px">
-          Members
-        </Text> */}
         <Image m="auto" p="3em" src="/img/members.png" />
         <Flex flexWrap="wrap" justifyContent="center">
           {memberList.map((member) => {
@@ -82,21 +81,27 @@ const Index = ({ liveData }) => {
                     {member.name}
                   </Text>
                 </Box>
-                <Box
-                  textAlign="center"
-                  backgroundImage={`/img/avatars/${member.twitter}.jpg`}
-                  backgroundSize="cover"
-                  p=".5em"
-                  m="0em 1em"
-                  borderRadius="1em"
-                  border={isLive ? "2px solid red" : "1px solid lightgray"}
-                  width="8em"
-                  height="7em"
-                >
-                  {isLive && (
-                    <FaCircle style={{ float: "right" }} color="red" />
-                  )}
-                </Box>
+                <Link href={`/member/${member.name}`}>
+                  <Box
+                    cursor="pointer"
+                    textAlign="center"
+                    backgroundImage={`/img/avatars/${member.twitter}.jpg`}
+                    backgroundSize="cover"
+                    p=".5em"
+                    m="0em 1em"
+                    borderRadius="1em"
+                    border={isLive ? "2px solid red" : "1px solid lightgray"}
+                    width="8em"
+                    height="7em"
+                    _hover={{
+                      boxShadow: "-4px 4px 10px black",
+                    }}
+                  >
+                    {isLive && (
+                      <FaCircle style={{ float: "right" }} color="red" />
+                    )}
+                  </Box>
+                </Link>
                 <Box>
                   <MediaButtons
                     twitter={member.twitter}

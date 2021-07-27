@@ -172,6 +172,6 @@ export const memberList = [
     name: "Tfue",
     twitter: "TTfue",
     youtube: "https://www.youtube.com/user/TTfue",
-    twitch: "Tfue",
+    twitch: "tfue",
   },
 ];
