@@ -44,6 +44,7 @@ const Index = ({ liveData }) => {
             <Image
               objectFit={isSmallerThan768 ? "cover" : "inherit"}
               width="100%"
+              maxW="1280px"
               height={isSmallerThan768 ? "200px" : "inherit"}
               borderRadius="8px"
               border="2px solid black"
