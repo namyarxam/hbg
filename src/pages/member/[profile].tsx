@@ -6,7 +6,7 @@ import {
   Text,
   Link,
   Center,
-  Wrap,
+  Img,
   Button,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
@@ -57,7 +57,7 @@ const Profile: React.FC<profileProps> = ({ memberInfo }) => {
                 />
               </Box>
             </Box>
-            <Image
+            <Img
               ml="8vw"
               p="25px"
               fallbackSrc="/img/Alex.png"
