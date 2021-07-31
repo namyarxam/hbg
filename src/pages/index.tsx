@@ -9,7 +9,7 @@ import { FaTwitter, FaCircle } from "react-icons/fa";
 import Link from "next/link";
 import { Member } from "../types/Member";
 
-const Index = ({ liveData }) => {
+const Index = ({ liveData, liveChannels }) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -21,22 +21,6 @@ const Index = ({ liveData }) => {
 
     return () => clearInterval(interval);
   }, []);
-
-  const liveChannels: String[] = liveData.map((streamData: any) => {
-    return streamData.user_login;
-  });
-
-  const promote = (members: Member[]) => {
-    for (let i = 0; i < members.length; i++) {
-      if (liveChannels.indexOf(members[i].twitch) >= 0) {
-        const x = members.splice(i, 1);
-        members.unshift(x[0]);
-      }
-    }
-    return members;
-  };
-
-  const membersLiveSorted = promote(memberList);
 
   const [isSmallerThan768] = useMediaQuery("(max-width: 768px)");
   const [isSmallerThan480] = useMediaQuery("(max-width: 480px)");
@@ -90,7 +74,7 @@ const Index = ({ liveData }) => {
         <Box backgroundImage="url(/img/stone4.jpg)" pb="2em">
           <Image m="auto" p="3em" src="/img/members.png" />
           <Flex m="auto" maxW="1280px" flexWrap="wrap" justifyContent="center">
-            {membersLiveSorted.map((member) => {
+            {liveData.map((member) => {
               const isLive =
                 liveChannels.findIndex(
                   (channel: string) => channel === member.twitch
@@ -194,9 +178,26 @@ export const getServerSideProps: GetServerSideProps = async ({}) => {
 
   const liveData = await getTwitchData("yk81a0a27h7j4m7aqxh9mgt5uvm750");
 
+  const liveChannels: String[] = liveData.map((streamData: any) => {
+    return streamData.user_login;
+  });
+
+  const promote = (members: Member[]) => {
+    for (let i = 0; i < members.length; i++) {
+      if (liveChannels.indexOf(members[i].twitch) >= 0) {
+        const x = members.splice(i, 1);
+        members.unshift(x[0]);
+      }
+    }
+    return members;
+  };
+
+  const membersLiveSorted = promote(memberList);
+
   return {
     props: {
-      liveData,
+      liveData: membersLiveSorted,
+      liveChannels,
     },
   };
 };
