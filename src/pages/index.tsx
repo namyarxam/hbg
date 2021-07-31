@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { FaTwitter, FaCircle } from "react-icons/fa";
 import Link from "next/link";
+import { Member } from "../types/Member";
 
 const Index = ({ liveData }) => {
   const router = useRouter();
@@ -21,9 +22,21 @@ const Index = ({ liveData }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const liveChannels = liveData.map((streamData: any) => {
+  const liveChannels: String[] = liveData.map((streamData: any) => {
     return streamData.user_login;
   });
+
+  const promote = (members: Member[]) => {
+    for (let i = 0; i < members.length; i++) {
+      if (liveChannels.indexOf(members[i].twitch) >= 0) {
+        const x = members.splice(i, 1);
+        members.unshift(x[0]);
+      }
+    }
+    return members;
+  };
+
+  const membersLiveSorted = promote(memberList);
 
   const [isSmallerThan768] = useMediaQuery("(max-width: 768px)");
   const [isSmallerThan480] = useMediaQuery("(max-width: 480px)");
@@ -77,10 +90,10 @@ const Index = ({ liveData }) => {
         <Box backgroundImage="url(/img/stone4.jpg)" pb="2em">
           <Image m="auto" p="3em" src="/img/members.png" />
           <Flex m="auto" maxW="1280px" flexWrap="wrap" justifyContent="center">
-            {memberList.map((member) => {
+            {membersLiveSorted.map((member) => {
               const isLive =
                 liveChannels.findIndex(
-                  (channel: any) => channel === member.twitch
+                  (channel: string) => channel === member.twitch
                 ) >= 0;
               return (
                 <Box key={member.name} mb="2em">

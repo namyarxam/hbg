@@ -1,3 +1,5 @@
+import { Member } from "../types/Member";
+
 export const memberList = [
   {
     name: "Feinberg",
@@ -203,4 +205,4 @@ export const memberList = [
     twitch: "tfue",
     uuid: "",
   },
-];
+] as Member[];
