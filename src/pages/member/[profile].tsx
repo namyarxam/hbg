@@ -153,8 +153,6 @@ const Profile: React.FC<profileProps> = ({ memberInfo, speedruns }) => {
                 muted
               />
 
-              {}
-
               {typeof window !== "undefined" && chatVisible ? (
                 <>
                   <TwitchChat
@@ -187,147 +185,184 @@ const Profile: React.FC<profileProps> = ({ memberInfo, speedruns }) => {
               )}
             </Box>
           </Flex>
-          <Box textAlign="center" mt="2em">
-            <Text color="white" fontSize="35px" fontWeight="bold" mb="0.5em">
-              Speedruns
-            </Text>
-          </Box>
-          <Flex justifyContent="center">
-            <Box textColor="white">
-              {speedruns.icarus.time && (
-                <Flex textAlign="center" p={isSmallerThan700 ? "1em" : null}>
-                  <Text
-                    position="absolute"
-                    left={0}
-                    right={0}
-                    ml="auto"
-                    mr="auto"
-                    width="100px"
-                    textAlign="center"
-                    color="yellow"
-                    fontWeight="bold"
-                  >
-                    - {speedruns.icarus.place} -
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_Rocket.png" />
-                  <Text
-                    m="auto"
-                    p="1em"
-                    _hover={{
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                    onClick={() => {
-                      window.open(speedruns.icarus.video);
-                    }}
-                  >
-                    <b>[ Icarus Any% RSG, 1.16 ]</b> - {speedruns.icarus.time}{" "}
-                    <ExternalLinkIcon mb="5px" />
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_Grass.png" />
-                </Flex>
-              )}
-              {speedruns.ssg.time && (
-                <Flex textAlign="center" p={isSmallerThan700 ? "1em" : null}>
-                  <Text
-                    position="absolute"
-                    left={0}
-                    right={0}
-                    ml="auto"
-                    mr="auto"
-                    width="100px"
-                    textAlign="center"
-                    color="yellow"
-                    fontWeight="bold"
-                  >
-                    - {speedruns.ssg.place} -
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_Flint.png" />
-                  <Text
-                    m="auto"
-                    p="1em"
-                    _hover={{
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                    onClick={() => {
-                      window.open(speedruns.ssg.video);
-                    }}
-                  >
-                    <b>[ SSG Any%, 1.16 ]</b> - {speedruns.ssg.time}{" "}
-                    <ExternalLinkIcon mb="5px" />
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_Gravel.png" />
-                </Flex>
-              )}
-              {speedruns.fsg.time && (
-                <Flex textAlign="center" p={isSmallerThan700 ? "1em" : null}>
-                  <Text
-                    position="absolute"
-                    left={0}
-                    right={0}
-                    ml="auto"
-                    mr="auto"
-                    width="100px"
-                    textAlign="center"
-                    color="yellow"
-                    fontWeight="bold"
-                  >
-                    - {speedruns.fsg.place} -
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_GI.png" />
-                  <Text
-                    m="auto"
-                    p="1em"
-                    _hover={{
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                    onClick={() => {
-                      window.open(speedruns.fsg.video);
-                    }}
-                  >
-                    <b>[ FSG Any%, 1.16 ]</b> - {speedruns.fsg.time}{" "}
-                    <ExternalLinkIcon mb="5px" />
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_BS.png" />
-                </Flex>
-              )}
-              {speedruns.rsg.time && (
-                <Flex textAlign="center" p={isSmallerThan700 ? "1em" : null}>
-                  <Text
-                    position="absolute"
-                    left={0}
-                    right={0}
-                    ml="auto"
-                    mr="auto"
-                    width="100px"
-                    textAlign="center"
-                    color="yellow"
-                    fontWeight="bold"
-                  >
-                    - {speedruns.rsg.place} -
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_BR.png" />
-                  <Text
-                    m="auto"
-                    p="1em"
-                    _hover={{
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                    onClick={() => {
-                      window.open(speedruns.rsg.video);
-                    }}
-                  >
-                    <b>[ RSG Any%, 1.16+ ]</b> - {speedruns.rsg.time}{" "}
-                    <ExternalLinkIcon mb="5px" />
-                  </Text>
-                  <Image width="4em" height="4em" src="/img/Block_NB.png" />
-                </Flex>
-              )}
-            </Box>
-          </Flex>
+          {speedruns && (
+            <>
+              <Box textAlign="center" mt="2em">
+                <Text
+                  color="white"
+                  fontSize="35px"
+                  fontWeight="bold"
+                  mb="0.5em"
+                >
+                  Speedruns
+                </Text>
+              </Box>
+              <Flex justifyContent="center">
+                <Box textColor="white">
+                  {speedruns.icarus.time && (
+                    <Flex
+                      textAlign="center"
+                      p={isSmallerThan700 ? "1em" : null}
+                    >
+                      <Text
+                        position="absolute"
+                        left={0}
+                        right={0}
+                        ml="auto"
+                        mr="auto"
+                        width="100px"
+                        textAlign="center"
+                        color="yellow"
+                        fontWeight="bold"
+                      >
+                        - {speedruns.icarus.place} -
+                      </Text>
+                      <Image
+                        width="4em"
+                        height="4em"
+                        src="/img/Block_Rocket.png"
+                      />
+                      <Text
+                        m="auto"
+                        p="1em"
+                        _hover={{
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                        onClick={() => {
+                          window.open(speedruns.icarus.video);
+                        }}
+                      >
+                        <b>[ Icarus Any% RSG, 1.16 ]</b> -{" "}
+                        {speedruns.icarus.time} <ExternalLinkIcon mb="5px" />
+                      </Text>
+                      <Image
+                        width="4em"
+                        height="4em"
+                        src="/img/Block_Grass.png"
+                      />
+                    </Flex>
+                  )}
+                  {speedruns.ssg.time && (
+                    <Flex
+                      textAlign="center"
+                      p={isSmallerThan700 ? "1em" : null}
+                    >
+                      <Text
+                        position="absolute"
+                        left={0}
+                        right={0}
+                        ml="auto"
+                        mr="auto"
+                        width="100px"
+                        textAlign="center"
+                        color="yellow"
+                        fontWeight="bold"
+                      >
+                        - {speedruns.ssg.place} -
+                      </Text>
+                      <Image
+                        width="4em"
+                        height="4em"
+                        src="/img/Block_Flint.png"
+                      />
+                      <Text
+                        m="auto"
+                        p="1em"
+                        _hover={{
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                        onClick={() => {
+                          window.open(speedruns.ssg.video);
+                        }}
+                      >
+                        <b>[ SSG Any%, 1.16 ]</b> - {speedruns.ssg.time}{" "}
+                        <ExternalLinkIcon mb="5px" />
+                      </Text>
+                      <Image
+                        width="4em"
+                        height="4em"
+                        src="/img/Block_Gravel.png"
+                      />
+                    </Flex>
+                  )}
+                  {speedruns.fsg.time && (
+                    <Flex
+                      textAlign="center"
+                      p={isSmallerThan700 ? "1em" : null}
+                    >
+                      <Text
+                        position="absolute"
+                        left={0}
+                        right={0}
+                        ml="auto"
+                        mr="auto"
+                        width="100px"
+                        textAlign="center"
+                        color="yellow"
+                        fontWeight="bold"
+                      >
+                        - {speedruns.fsg.place} -
+                      </Text>
+                      <Image width="4em" height="4em" src="/img/Block_GI.png" />
+                      <Text
+                        m="auto"
+                        p="1em"
+                        _hover={{
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                        onClick={() => {
+                          window.open(speedruns.fsg.video);
+                        }}
+                      >
+                        <b>[ FSG Any%, 1.16 ]</b> - {speedruns.fsg.time}{" "}
+                        <ExternalLinkIcon mb="5px" />
+                      </Text>
+                      <Image width="4em" height="4em" src="/img/Block_BS.png" />
+                    </Flex>
+                  )}
+                  {speedruns.rsg.time && (
+                    <Flex
+                      textAlign="center"
+                      p={isSmallerThan700 ? "1em" : null}
+                    >
+                      <Text
+                        position="absolute"
+                        left={0}
+                        right={0}
+                        ml="auto"
+                        mr="auto"
+                        width="100px"
+                        textAlign="center"
+                        color="yellow"
+                        fontWeight="bold"
+                      >
+                        - {speedruns.rsg.place} -
+                      </Text>
+                      <Image width="4em" height="4em" src="/img/Block_BR.png" />
+                      <Text
+                        m="auto"
+                        p="1em"
+                        _hover={{
+                          cursor: "pointer",
+                          textDecoration: "underline",
+                        }}
+                        onClick={() => {
+                          window.open(speedruns.rsg.video);
+                        }}
+                      >
+                        <b>[ RSG Any%, 1.16+ ]</b> - {speedruns.rsg.time}{" "}
+                        <ExternalLinkIcon mb="5px" />
+                      </Text>
+                      <Image width="4em" height="4em" src="/img/Block_NB.png" />
+                    </Flex>
+                  )}
+                </Box>
+              </Flex>
+            </>
+          )}
         </Box>
       </Box>
       <Box
@@ -372,12 +407,15 @@ export async function getStaticProps(context: any) {
       return response.data;
     } catch (err) {
       console.log("err", err);
-      return {};
+      return null;
     }
   };
 
   const getFormattedSpeedrunData = async () => {
     const srData = await getSpeedrunData();
+
+    if (!srData) return null;
+
     const relevantRunData = Object.values(srData).filter(
       (speedrun: Run) =>
         speedrun.run.values["jlzwd77l"] == "xqkj8kdl" ||
