@@ -71,13 +71,30 @@ export default function AdminPage() {
     sr: "",
   });
 
-  function handlePasswordSubmit() {
-    if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-      setAuthenticated(true);
-      fetchMembers();
-    } else {
+  async function handlePasswordSubmit() {
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setAuthenticated(true);
+        fetchMembers();
+      } else {
+        toast({
+          title: data.message || "Incorrect password",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
       toast({
-        title: "Incorrect password",
+        title: "Network error",
         status: "error",
         duration: 3000,
         isClosable: true,
