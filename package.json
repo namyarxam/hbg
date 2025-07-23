@@ -7,15 +7,15 @@
     "refresh:twitch": "node refresh-twitch-token.js"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^1.0.0",
-    "@chakra-ui/react": "^1.4.2",
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0",
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "axios": "^0.21.1",
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.0",
-    "framer-motion": "^4.0.3",
-    "next": "latest",
+    "framer-motion": "^6.5.1",
+    "next": "13.5.6",
     "next-images": "^1.8.1",
     "nextjs-progressbar": "0.0.11",
     "react": "18",
@@ -28,6 +28,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.4.3",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "typescript": "^5.8.3"
   },
   "engines": {

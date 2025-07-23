@@ -1,6 +1,5 @@
 // theme.tsx
 import { extendTheme } from "@chakra-ui/react";
-import { createBreakpoints } from "@chakra-ui/theme-tools";
 
 const fonts = {
   mono: `'Menlo', monospace`,
@@ -9,12 +8,15 @@ const fonts = {
   minecraft: `'Minecraftia', monospace`, // 🔥 custom
 };
 
-const breakpoints = createBreakpoints({
+// In Chakra v2, breakpoints are just an object, no createBreakpoints needed
+const breakpoints = {
+  base: "0em",
   sm: "40em",
   md: "52em",
   lg: "64em",
   xl: "80em",
-});
+  "2xl": "96em",
+};
 
 const theme = extendTheme({
   styles: {
