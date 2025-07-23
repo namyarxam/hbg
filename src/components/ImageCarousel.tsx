@@ -42,15 +42,25 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
     trackTouch: true,
   });
 
+  const flexProps: React.ComponentProps<typeof Flex> = {
+    align: "center",
+    justify: "center",
+    width: "full",
+    position: "relative",
+    ...handlers,
+  };
+
+  const modalProps: React.ComponentProps<typeof ModalContent> = {
+    bg: "blackAlpha.900",
+    maxH: "100vh",
+    position: "relative",
+    overflow: "hidden",
+    ...modalSwipeHandlers,
+  };
+
   return (
     <>
-      <Flex
-        align="center"
-        justify="center"
-        width="full"
-        position="relative"
-        {...handlers}
-      >
+      <Flex {...flexProps}>
         {/* Left Arrow */}
         <IconButton
           aria-label="Previous image"
@@ -92,13 +102,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
       {/* Fullscreen Modal */}
       <Modal isOpen={isOpen} onClose={onClose} size="full" isCentered>
         <ModalOverlay onClick={onClose} cursor="pointer" bg="blackAlpha.800" />
-        <ModalContent
-          bg="blackAlpha.900"
-          maxH="100vh"
-          {...modalSwipeHandlers}
-          position="relative"
-          overflow="hidden"
-        >
+        <ModalContent {...modalProps}>
           {/* Close Button */}
           <IconButton
             aria-label="Close fullscreen"
