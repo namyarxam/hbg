@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
   Flex,
   Input,
   Modal,
+  Link,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -17,16 +18,23 @@ import {
   useToast,
   FormControl,
   FormLabel,
+  FormHelperText,
+  FormErrorMessage,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { AiOutlineHome } from "react-icons/ai";
 import { useRouter } from "next/router";
 
 type Member = {
+  id: string;
   name: string;
-  twitter?: string;
-  youtube?: string;
-  twitch?: string;
-  uuid: string;
+  twitter: string;
+  youtube: string;
+  twitch: string;
+  mcuuid?: string;
+  sr?: string;
+  art?: string[];
+  password?: string;
 };
 
 export default function AdminPage() {
@@ -34,6 +42,9 @@ export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const [isSmallerThan735] = useMediaQuery("(max-width: 735px)");
 
   const router = useRouter();
   const toast = useToast();
@@ -53,10 +64,11 @@ export default function AdminPage() {
 
   const [newMember, setNewMember] = useState({
     name: "",
-    uuid: "",
+    mcuuid: "",
     twitter: "",
     youtube: "",
     twitch: "",
+    sr: "",
   });
 
   function handlePasswordSubmit() {
@@ -98,7 +110,7 @@ export default function AdminPage() {
       const res = await fetch("/api/members", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uuid: memberToDelete.uuid }),
+        body: JSON.stringify({ id: memberToDelete.id }),
       });
 
       if (!res.ok) throw new Error("Failed to delete");
@@ -110,7 +122,7 @@ export default function AdminPage() {
         isClosable: true,
       });
 
-      setMembers((prev) => prev.filter((m) => m.uuid !== memberToDelete.uuid));
+      setMembers((prev) => prev.filter((m) => m.id !== memberToDelete.id));
       setMemberToDelete(null);
       onDeleteClose();
     } catch {
@@ -123,17 +135,62 @@ export default function AdminPage() {
     }
   }
 
-  async function handleAddMember() {
-    const { name } = newMember;
+  function validateFields() {
+    const errs: Record<string, string> = {};
+    const { name, twitter, youtube, twitch, sr } = newMember;
+
     if (!name) {
-      toast({
-        title: "Name is required",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
+      errs.name = "Name is required";
+    } else if (name.length > 12) {
+      errs.name = "Name must be 12 characters or fewer";
+    }
+
+    if (!twitter) {
+      errs.twitter = "Twitter is required";
+    } else if (
+      (twitter && twitter.includes("http")) ||
+      twitter.includes("www.") ||
+      twitter.includes(".com")
+    ) {
+      errs.twitter = "Enter only the Twitter handle (no URL)";
+    }
+
+    if (!youtube) {
+      errs.youtube = "Youtube is required";
+    } else if (youtube && !/^https?:\/\/.+\..+/.test(youtube)) {
+      errs.youtube = "Must be a valid YouTube URL";
+    }
+
+    if (!twitch) {
+      errs.twitch = "Twitch is required";
+    } else if (
+      (twitch && twitch.includes("http")) ||
+      twitch.includes("www.") ||
+      twitch.includes(".com")
+    ) {
+      errs.twitch = "Enter only the Twitch handle (no URL)";
+    }
+
+    if (
+      (sr && sr.includes("http")) ||
+      sr.includes("www.") ||
+      sr.includes(".com")
+    ) {
+      errs.twitch = "Enter only the Speedrun.com handle (no URL)";
+    }
+
+    return errs;
+  }
+
+  async function handleAddMember() {
+    const validationErrors = validateFields();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
+
+    setErrors({});
 
     try {
       const res = await fetch("/api/members", {
@@ -149,10 +206,11 @@ export default function AdminPage() {
       onAddClose();
       setNewMember({
         name: "",
-        uuid: "",
+        mcuuid: "",
         twitter: "",
         youtube: "",
         twitch: "",
+        sr: "",
       });
       toast({
         title: `Added ${added.name}`,
@@ -182,6 +240,12 @@ export default function AdminPage() {
             placeholder="Password"
             color="white"
             value={password}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handlePasswordSubmit();
+              }
+            }}
             onChange={(e) => setPassword(e.target.value)}
             mb={4}
           />
@@ -199,7 +263,11 @@ export default function AdminPage() {
 
   return (
     <>
-      <Box position="absolute" top="30px" left="30px">
+      <Box
+        position={isSmallerThan735 ? "relative" : "absolute"}
+        top={isSmallerThan735 ? "5px" : "30px"}
+        left={isSmallerThan735 ? "5px" : "30px"}
+      >
         <AiOutlineHome
           style={{ cursor: "pointer" }}
           onClick={() => {
@@ -212,7 +280,7 @@ export default function AdminPage() {
       <Box p={6} maxWidth="600px" mx="auto">
         <Flex justify="space-between" mb={6} align="center">
           <Text color="white" fontSize="2xl" fontWeight="bold">
-            Admin Panel
+            HBG Admin
           </Text>
           <Button colorScheme="green" onClick={onAddOpen}>
             Add New Member
@@ -226,7 +294,7 @@ export default function AdminPage() {
             {members.length === 0 && <Text>No members found.</Text>}
             {members.map((member) => (
               <Flex
-                key={member.uuid}
+                key={member.mcuuid}
                 justify="space-between"
                 align="center"
                 p={3}
@@ -283,7 +351,7 @@ export default function AdminPage() {
             <ModalCloseButton />
             <ModalBody>
               <VStack spacing={4}>
-                <FormControl isRequired>
+                <FormControl isRequired isInvalid={!!errors.name}>
                   <FormLabel>Name</FormLabel>
                   <Input
                     value={newMember.name}
@@ -291,17 +359,11 @@ export default function AdminPage() {
                       setNewMember({ ...newMember, name: e.target.value })
                     }
                   />
+                  <FormHelperText>Max 12 characters</FormHelperText>
+                  <FormErrorMessage>{errors.name}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
-                  <FormLabel>UUID</FormLabel>
-                  <Input
-                    value={newMember.uuid}
-                    onChange={(e) =>
-                      setNewMember({ ...newMember, uuid: e.target.value })
-                    }
-                  />
-                </FormControl>
-                <FormControl>
+
+                <FormControl isRequired isInvalid={!!errors.twitter}>
                   <FormLabel>Twitter</FormLabel>
                   <Input
                     value={newMember.twitter}
@@ -309,8 +371,11 @@ export default function AdminPage() {
                       setNewMember({ ...newMember, twitter: e.target.value })
                     }
                   />
+                  <FormHelperText>Just the handle, no URL</FormHelperText>
+                  <FormErrorMessage>{errors.twitter}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+
+                <FormControl isRequired isInvalid={!!errors.youtube}>
                   <FormLabel>YouTube</FormLabel>
                   <Input
                     value={newMember.youtube}
@@ -318,8 +383,11 @@ export default function AdminPage() {
                       setNewMember({ ...newMember, youtube: e.target.value })
                     }
                   />
+                  <FormHelperText>Must be a valid URL</FormHelperText>
+                  <FormErrorMessage>{errors.youtube}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+
+                <FormControl isRequired isInvalid={!!errors.twitch}>
                   <FormLabel>Twitch</FormLabel>
                   <Input
                     value={newMember.twitch}
@@ -327,6 +395,41 @@ export default function AdminPage() {
                       setNewMember({ ...newMember, twitch: e.target.value })
                     }
                   />
+                  <FormHelperText>Just the handle, no URL</FormHelperText>
+                  <FormErrorMessage>{errors.twitch}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl isInvalid={!!errors.sr}>
+                  <FormLabel>Speedrun.com Name</FormLabel>
+                  <Input
+                    value={newMember.sr}
+                    onChange={(e) =>
+                      setNewMember({ ...newMember, sr: e.target.value })
+                    }
+                  />
+                  <FormHelperText>Just the handle, no URL</FormHelperText>
+                  <FormErrorMessage>{errors.sr}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Minecraft UUID</FormLabel>
+                  <Input
+                    value={newMember.mcuuid}
+                    onChange={(e) =>
+                      setNewMember({ ...newMember, mcuuid: e.target.value })
+                    }
+                  />
+                  <FormHelperText>
+                    You can find this by entering your username at
+                    <Link
+                      color="blue"
+                      href="https://mcuuid.net/"
+                      target="_blank"
+                    >
+                      {" "}
+                      https://mcuuid.net/
+                    </Link>
+                  </FormHelperText>
                 </FormControl>
               </VStack>
             </ModalBody>

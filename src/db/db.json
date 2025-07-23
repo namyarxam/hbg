@@ -1,144 +1,232 @@
 {
+  "twitchAuth": {
+    "accessToken": "oyw1jq5e02u2wlodnnl6uwxnqt2mdv",
+    "refreshToken": "ptizo2wefyghcsh5le73rrzndwcg94lunyxbd3ksso1pfakjgv",
+    "expiresAt": 1753304862
+  },
   "members": [
     {
       "name": "Feinberg",
       "twitter": "feinberg_mc",
       "youtube": "https://www.youtube.com/channel/UCAdKNsVKLW1xWNpy4eB_5AQ",
       "twitch": "feinberg",
-      "uuid": "9a8e24df-4c85-49d6-96a6-951da84fa5c4"
+      "mcuuid": "9a8e24df-4c85-49d6-96a6-951da84fa5c4",
+      "sr": "feinberg",
+      "id": "9c4dbecd-965b-4e46-9508-226619ff0fb2",
+      "art": [
+        "https://pbs.twimg.com/media/Gv7AXB9a4AAAZkY?format=jpg&name=large",
+        "https://pbs.twimg.com/media/GmFaLhIb0AA9e2C?format=jpg&name=4096x4096"
+      ],
+      "password": "$2b$10$njc3N/FPF2oTPFC5IPv8LulPLLhVgnay2Y3KPilYbStXf6Q5p6jX2"
     },
     {
       "name": "Couriway",
       "twitter": "realcouri",
       "youtube": "https://www.youtube.com/channel/UCnesGE3TRvAYfTa88hukm8A",
       "twitch": "couriway",
-      "uuid": "994f9376-3f80-48bc-9e72-ee92f861911d"
+      "mcuuid": "994f9376-3f80-48bc-9e72-ee92f861911d",
+      "sr": "couriway",
+      "id": "e4689983-20be-45fa-b25e-8f61666e2284",
+      "art": [],
+      "password": "$2b$10$Mt5Ov1qn.de.fItNXzjGL.7IFECjyEdfHm50Tx8M1jLVJ62hWkWzG"
     },
     {
       "name": "k4yfour",
       "twitter": "k4yfour",
       "youtube": "https://www.youtube.com/channel/UCk2NQDMT5vNAZIIG2Wxz6QQ",
       "twitch": "k4yfour",
-      "uuid": "627c399d-0d0c-4931-8905-bac47287d4a3"
+      "mcuuid": "627c399d-0d0c-4931-8905-bac47287d4a3",
+      "sr": "k4yfour",
+      "id": "9237c2d0-85ad-4b67-8b5e-8dd955f39bbc",
+      "art": [],
+      "password": "$2b$10$1vAhQY4xn4KigpHYzSANlecQbXJOloBcFG2/zToqPuz9lnmPOw4BK"
     },
     {
       "name": "Fyroah",
       "twitter": "fyroah",
       "youtube": "https://www.youtube.com/channel/UCOZ-HufSERlLN3USTLTy8Ng",
       "twitch": "fyroah",
-      "uuid": "d0acbca0-d50e-4824-bc38-a44395cce096"
+      "mcuuid": "d0acbca0-d50e-4824-bc38-a44395cce096",
+      "sr": "fyroah",
+      "id": "20dd2a24-cdb1-4c93-b338-d3e078310e9b",
+      "art": [],
+      "password": "$2b$10$qPjMqVUCMCzvF.oUeYib0ek9ONIQRikWGnO/oC7YyhdjbRakE4sqW"
     },
     {
       "name": "Dylqn",
       "twitter": "Dylqnnnn_tv",
       "youtube": "https://www.youtube.com/channel/UCLxsMltKWTeeyNztPXajzzQ",
       "twitch": "dylqnnnn",
-      "uuid": "2f59967f-6a78-41ab-840e-2cb032589a04"
+      "mcuuid": "2f59967f-6a78-41ab-840e-2cb032589a04",
+      "sr": "dylqn",
+      "id": "9c6bdcee-f16b-4c70-858d-37369412d1dd",
+      "art": [],
+      "password": "$2b$10$Tocj4TuTBqA6j5p8JBjCcOIlshqGBE15PlkunXdGpKtx7r9IbAy8O"
     },
     {
       "name": "Dav1E",
       "twitter": "xDav1E",
       "youtube": "https://www.youtube.com/channel/UCz_VN38uemOcIu-WS21A7ow",
       "twitch": "dav1e",
-      "uuid": "a59ef4b8-3884-4694-b3f3-81fc47c9ff71"
+      "mcuuid": "a59ef4b8-3884-4694-b3f3-81fc47c9ff71",
+      "sr": "dav1e",
+      "id": "1bc5e138-bc10-4ee2-9feb-927de718c890",
+      "art": [],
+      "password": "$2b$10$9XHUINlDPObOiZmwajTQJ.NEdE7kRG7tmWzj43YGgGE80SFkS3Uz2"
     },
     {
       "name": "21mustard",
       "twitter": "21mustard",
       "youtube": "https://www.youtube.com/channel/UCBGDNdGHo3ShyywYl8_zYqg",
       "twitch": "21mustard",
-      "uuid": "3a07fee4-ce5a-4f22-b5f2-bf207d075e0f"
+      "mcuuid": "3a07fee4-ce5a-4f22-b5f2-bf207d075e0f",
+      "sr": "21mustard",
+      "id": "e2f2eb72-9ab0-43e4-8ac1-cb20b05cd171",
+      "art": [],
+      "password": "$2b$10$NjmtIO6z1hoNgRTchRnw7uFs2zjXyA.z4KcPD0HnSUww.4xPxpb4u"
     },
     {
       "name": "Fulham",
       "twitter": "FulhamYT",
       "youtube": "https://www.youtube.com/halfham",
       "twitch": "fulham",
-      "uuid": "04b71379-daad-40a1-891f-a1d49964d69d"
+      "mcuuid": "04b71379-daad-40a1-891f-a1d49964d69d",
+      "sr": "fulham",
+      "id": "12ab2e06-5837-49cd-a11c-e9da4aed3dda",
+      "art": [],
+      "password": "$2b$10$OBOuFT1VkvsW4WQvYV7ZLeieqzfCv9XItY2uDlCSI4OxYjC6OoXKi"
     },
     {
       "name": "Reignex",
       "twitter": "0Reign",
       "youtube": "https://www.youtube.com/user/ReignOfPowerade",
       "twitch": "reignex",
-      "uuid": "a536eec9-a68e-4d30-9cd0-9f5af4c006a7"
+      "mcuuid": "a536eec9-a68e-4d30-9cd0-9f5af4c006a7",
+      "sr": "reignex",
+      "id": "48d3dc17-0812-45ad-b4fb-28ac06aba3ad",
+      "art": [],
+      "password": "$2b$10$5OYOcK5I.O8BLSjE7S8Kx.lt0nP9KFWKLIsbHVd9812K0H51E1/NG"
     },
     {
       "name": "Firework",
       "twitter": "ItsFireworkss",
       "youtube": "https://www.youtube.com/",
       "twitch": "itsfireworkss",
-      "uuid": "c2872a82-02de-4e53-b100-19ca46ebc553"
+      "mcuuid": "c2872a82-02de-4e53-b100-19ca46ebc553",
+      "sr": "",
+      "id": "98c84e65-c7b5-4f6e-9491-dd753ab6a0ce",
+      "art": [],
+      "password": "$2b$10$IAti.695q1b0loTE8B/NUeYWSrevwXQSWFugC3I5B0JV4tTFQj4x2"
     },
     {
       "name": "nerdi",
       "twitter": "nerdi_tv",
       "youtube": "https://www.youtube.com/channel/UC6biibPR-2NJtoH5hp_rFBA",
       "twitch": "nerdi",
-      "uuid": ""
+      "mcuuid": "",
+      "sr": "nerdi",
+      "id": "71469828-a35e-42b6-961c-e8c951aa0b83",
+      "art": [],
+      "password": "$2b$10$Bd8OYRgcLZWOJPVqley0puuGTChMOD4gsAt9m6wZ83RWsGerlVn2a"
     },
     {
       "name": "Ninjabrain1",
       "twitter": "ninjabrain",
       "youtube": "https://www.youtube.com/user/ninjabraintv",
       "twitch": "ninjabrain1",
-      "uuid": "2a49c7eb-fb60-41db-a3b1-f63e6b846d2b"
+      "mcuuid": "2a49c7eb-fb60-41db-a3b1-f63e6b846d2b",
+      "sr": "ninjabrain1",
+      "id": "ae64540f-5d75-4614-bbc3-62f213040f85",
+      "art": [],
+      "password": "$2b$10$EQSpYPTGuCMs2G7KBaC3HO98YLB4mfnFcybf8Y9BWDgyH1agCGoBi"
     },
     {
       "name": "nEmerald",
       "twitter": "nEmerald07",
       "youtube": "https://www.youtube.com/channel/UCWbccfL0OSz6aI4xNacBh_w",
       "twitch": "n3merald",
-      "uuid": "4aed1e5e-8f5c-44e2-bc06-66e0c03781af"
+      "mcuuid": "4aed1e5e-8f5c-44e2-bc06-66e0c03781af",
+      "sr": "nemerald",
+      "id": "f8de4197-cb3c-4a60-8d45-5caf7e5ed5a8",
+      "art": [],
+      "password": "$2b$10$/FUsaAHap29K/opr5V4JoOd.rNRpyv.OrzKqSiswUhRyueAgAyCKW"
     },
     {
       "name": "Tekniik",
       "twitter": "tekniik_",
       "youtube": "https://www.youtube.com/user/TeKNiiKMC",
       "twitch": "tekniik_",
-      "uuid": ""
+      "mcuuid": "95256ad2-f5f2-4d64-a9d2-587c4f035671",
+      "sr": "tekniik",
+      "id": "9aca06da-8b1b-4d08-8fb2-d1e576d59989",
+      "art": [],
+      "password": "$2b$10$4jmS.owTXDyNlsf0WMGDXOHdJC8u6pGiBM20aSY/5H0zhrJ3uZzVm"
     },
     {
       "name": "Silverr",
       "twitter": "silverruns",
       "youtube": "https://www.youtube.com/user/mrsilverskyclops",
       "twitch": "silverrruns",
-      "uuid": "587a0ff3-36b2-45e1-8f31-838583e9d4b8"
+      "mcuuid": "587a0ff3-36b2-45e1-8f31-838583e9d4b8",
+      "sr": "silverr",
+      "id": "374e6e37-3d43-4054-9cfb-2272b6e7f4be",
+      "art": [],
+      "password": "$2b$10$NhpH6JPXdL96FsKNpqtVPOJbNBa/mG2jxyoLgCD5ExNjE8vFrL9gu"
     },
     {
       "name": "raddles",
       "twitter": "raddles__",
       "youtube": "https://www.youtube.com/channel/UCJbVuKBKdegR5-ZlsSQpQMg",
       "twitch": "raddles",
-      "uuid": ""
+      "mcuuid": "",
+      "sr": "raddles",
+      "id": "5f4c75cc-d6ae-4c6b-9d97-cd2bc1ca4410",
+      "art": [],
+      "password": "$2b$10$yJCX3bWkczgyPVeyPrmqw.j/Lh8lDJMQomUaTHjz6h8uQk/u7cqYa"
     },
     {
       "name": "fruitberries",
       "twitter": "froubery",
       "youtube": "https://www.youtube.com/fruitberries",
       "twitch": "fruitberries",
-      "uuid": "4d2eb015-44af-45ae-9a2c-a6a7bcbae7a4"
+      "mcuuid": "4d2eb015-44af-45ae-9a2c-a6a7bcbae7a4",
+      "sr": "fruitberries",
+      "id": "b407b3ec-4062-4072-a3c0-4d82c3bd74ef",
+      "art": [],
+      "password": "$2b$10$tdC/9.R43BXmzvky7Um9KeQNTdkyafa9msBoRvuOOhai9VMpV70te"
     },
     {
       "name": "Cube",
       "twitter": "Cube1337x",
       "youtube": "https://www.youtube.com/channel/UChlZtNyDjC0llHz7sdlG9dg",
       "twitch": "cube1337x",
-      "uuid": "1ae14cb9-6a2f-4357-a71e-fac6f7012b59"
+      "mcuuid": "1ae14cb9-6a2f-4357-a71e-fac6f7012b59",
+      "sr": "cube1337x",
+      "id": "f7d71dde-5594-42c0-8b2e-99295a44f80e",
+      "art": [],
+      "password": "$2b$10$Yk.lwQFi3896UE5vlafU..aNkcdnRNjTg08UguuVkzC2kNlaMGmky"
     },
     {
       "name": "Poundcake",
       "twitter": "presipoundcake",
       "youtube": "https://www.youtube.com/@PresidentPoundcake",
       "twitch": "president_poundcake",
-      "uuid": "1ae14cb9-6a2f-4357-a71e-fac6f7012b59"
+      "mcuuid": "1ae14cb9-6a2f-4357-a71e-fac6f7012b59",
+      "sr": "presidentpoundcake",
+      "id": "98bc9fe4-8c68-466b-a32b-7822e3ae1b07",
+      "art": [],
+      "password": "$2b$10$YPr9A6xygo4GN/SF9MpJh.hYRHht5Uw/2Xl2R14JKJynEzElEn7Ky"
     },
     {
       "name": "infume",
       "twitter": "infume_",
       "youtube": "https://www.youtube.com/channel/UCjnnCjLxONkFvljss5Dg2PQ",
       "twitch": "infume",
-      "uuid": "a54e3bc4-c635-4b07-a236-b81efbcfe791"
+      "mcuuid": "a54e3bc4-c635-4b07-a236-b81efbcfe791",
+      "sr": "infume",
+      "id": "a9c8babd-b8dd-495a-94e3-98ce8ddd4024",
+      "art": [],
+      "password": "$2b$10$jQnORtouzNZ6CG.gI4UEJOKLlpfYHzB0jA5te26XzmtlJoCNrHwu."
     }
   ]
 }

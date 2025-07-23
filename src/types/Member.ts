@@ -3,5 +3,5 @@ export interface Member {
   twitter: string;
   youtube: string;
   twitch: string;
-  uuid: string;
+  mcuuid: string;
 }

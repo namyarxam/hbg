@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { readDb, writeDb, Member } from "@/lib/db";
+import { v1 as uuidv4 } from "uuid";
+import bcrypt from "bcryptjs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,19 +13,31 @@ export default async function handler(
   }
 
   if (req.method === "POST") {
-    const { name, twitter, youtube, twitch, uuid } = req.body;
+    const { name, twitter, youtube, twitch, mcuuid, sr } = req.body;
 
-    if (!name || !uuid) {
-      return res.status(400).json({ error: "Name and uuid are required" });
+    if (!name || !twitter || !youtube || !twitch) {
+      return res
+        .status(400)
+        .json({ error: "name, twitter, youtube, and twitch are required" });
     }
 
     const db = await readDb();
+    const id = uuidv4();
 
-    if (db.members.find((m) => m.uuid === uuid)) {
-      return res.status(409).json({ error: "UUID already exists" });
-    }
+    const rawPassword = twitch + "hbg";
+    const hashedPassword = await bcrypt.hash(rawPassword, 10);
 
-    const newMember: Member = { name, twitter, youtube, twitch, uuid };
+    const newMember: Member = {
+      name,
+      twitter,
+      youtube,
+      twitch,
+      mcuuid,
+      sr,
+      id,
+      art: [],
+      password: hashedPassword,
+    };
     db.members.push(newMember);
     await writeDb(db);
 
@@ -31,16 +45,14 @@ export default async function handler(
   }
 
   if (req.method === "DELETE") {
-    const { uuid } = req.body;
+    const { id } = req.body;
 
-    if (!uuid) {
-      return res
-        .status(400)
-        .json({ error: "UUID is required to delete a member" });
+    if (!id) {
+      return res.status(400).json({ error: "Missing member id" });
     }
 
     const db = await readDb();
-    const index = db.members.findIndex((m) => m.uuid === uuid);
+    const index = db.members.findIndex((m) => m.id === id);
 
     if (index === -1) {
       return res.status(404).json({ error: "Member not found" });

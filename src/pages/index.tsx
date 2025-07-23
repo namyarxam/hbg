@@ -1,5 +1,8 @@
-import { Flex, Box, Text, Image, useMediaQuery } from "@chakra-ui/react";
+import { readDb, writeDb } from "@/lib/db";
+import fs, { access } from "fs";
+import path from "path";
 import axios from "axios";
+import { Flex, Box, Text, Image, useMediaQuery } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { FaTwitter, FaDiscord, FaCircle } from "react-icons/fa";
 import Link from "next/link";
@@ -38,7 +41,7 @@ const Index = ({ liveData, liveChannels, profileImages, members }) => {
               fontSize="60px"
               color="white"
               lineHeight="normal"
-              bgImage="url(/img/endstone.png)"
+              bgImage="url(/img/gold.png)"
               bgSize="25px"
               sx={{
                 WebkitBackgroundClip: "text",
@@ -115,6 +118,7 @@ const Index = ({ liveData, liveChannels, profileImages, members }) => {
                           : undefined
                       }
                       backgroundSize="cover"
+                      backgroundPosition="center"
                       p=".5em"
                       m="0em 1em"
                       borderRadius="1em"
@@ -135,15 +139,6 @@ const Index = ({ liveData, liveChannels, profileImages, members }) => {
             })}
           </Flex>
         </Box>
-        <Box
-          as="footer"
-          mx="auto"
-          width="100%"
-          py="5"
-          px={{ base: "4", md: "8" }}
-          backgroundImage="url(/img/mossy.jpg)"
-          backgroundSize="50px"
-        ></Box>
       </Box>
     </>
   );
@@ -160,25 +155,43 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const members = await res.json();
 
   const memberTwitchLogins = members.map((member) => member.twitch);
+  const db = await readDb();
+  let { accessToken, refreshToken, expiresAt } = db.twitchAuth;
+  const now = Math.floor(Date.now() / 1000) - 600;
 
-  const handleTokenExpired = async (): Promise<string> => {
+  const refreshAccessToken = async (): Promise<string> => {
     const { data } = await axios.post(
       "https://id.twitch.tv/oauth2/token",
       null,
       {
         params: {
           grant_type: "refresh_token",
-          refresh_token: process.env.TWITCH_REFRESH_TOKEN!,
+          refresh_token: refreshToken,
           client_id: process.env.TWITCH_CLIENT_ID!,
           client_secret: process.env.TWITCH_SECRET!,
         },
       }
     );
 
-    return data.access_token;
+    const newAccessToken = data.access_token;
+    const newRefreshToken = data.refresh_token;
+    const expiresIn = data.expires_in;
+
+    db.twitchAuth = {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+      expiresAt: now + expiresIn,
+    };
+    await writeDb(db);
+
+    return newAccessToken;
   };
 
-  const getTwitchData = async (accessToken: string): Promise<any[]> => {
+  if (now >= expiresAt) {
+    accessToken = await refreshAccessToken();
+  }
+
+  const getTwitchData = async (token: string) => {
     try {
       const { data: response } = await axios.get(
         "https://api.twitch.tv/helix/streams",
@@ -187,16 +200,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             user_login: memberTwitchLogins,
           },
           headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "client-id": process.env.TWITCH_CLIENT_ID!,
+            Authorization: `Bearer ${token}`,
+            "Client-Id": process.env.TWITCH_CLIENT_ID!,
           },
         }
       );
       return response.data;
     } catch (err: any) {
       if (err.response?.status === 401) {
-        const newAccessToken = await handleTokenExpired();
-        return getTwitchData(newAccessToken);
+        // Access token expired during this request, refresh and retry once
+        accessToken = await refreshAccessToken();
+        return getTwitchData(accessToken);
       }
       console.error("Twitch API error:", err.message);
       return [];
@@ -204,21 +218,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 
   const getUserProfiles = async (accessToken: string, logins: string[]) => {
-    const { data } = await axios.get("https://api.twitch.tv/helix/users", {
-      params: { login: logins },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Client-Id": process.env.TWITCH_CLIENT_ID!,
-      },
-    });
-
-    return data.data;
+    try {
+      const { data } = await axios.get("https://api.twitch.tv/helix/users", {
+        params: { login: logins },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Client-Id": process.env.TWITCH_CLIENT_ID!,
+        },
+      });
+      return data.data;
+    } catch (err: any) {
+      console.error("Twitch User API error:", err.message);
+      return [];
+    }
   };
-
-  const accessToken = process.env.TWITCH_ACCESS_TOKEN!;
 
   const liveData = await getTwitchData(accessToken);
   const liveChannels = liveData.map((streamData: any) => streamData.user_login);
+
+  // promote live members to top
   const promote = (members: Member[]): Member[] => {
     const live = members.filter((m) => liveChannels.includes(m.twitch));
     const offline = members.filter((m) => !liveChannels.includes(m.twitch));
