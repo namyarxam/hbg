@@ -1,35 +1,19 @@
 import { Flex, Box, Text, Image, useMediaQuery } from "@chakra-ui/react";
-import { memberList } from "../data/memberList";
-import MediaButtons from "../components/MediaButtons";
 import axios from "axios";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { GetServerSideProps } from "next";
-import { FaTwitter, FaCircle } from "react-icons/fa";
+import { FaTwitter, FaDiscord, FaCircle } from "react-icons/fa";
 import Link from "next/link";
 import { Member } from "../types/Member";
+import { shuffle } from "../utils/shuffle";
 
-const Index = ({ liveData, liveChannels }) => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      router.replace(router.asPath, null, {
-        scroll: false,
-      });
-    }, 30000);
-
-    return () => clearInterval(interval);
-  }, []);
-
+const Index = ({ liveData, liveChannels, profileImages, members }) => {
   const [isSmallerThan768] = useMediaQuery("(max-width: 768px)");
   const [isSmallerThan480] = useMediaQuery("(max-width: 480px)");
 
   return (
     <>
       <Box>
-        <Box height="5em" backgroundImage="url(/img/dirt4.jpg)"></Box>
-        <Flex backgroundImage="url(/img/dirt3.jpg)">
+        <Flex backgroundImage="url(/img/blackstone.jpg)" backgroundSize="50px">
           <Box
             m="auto"
             width="95%"
@@ -40,41 +24,65 @@ const Index = ({ liveData, liveChannels }) => {
           >
             <Image
               objectFit={isSmallerThan768 ? "cover" : "inherit"}
-              width="100%"
-              maxW="1280px"
-              height={isSmallerThan768 ? "200px" : "inherit"}
+              width="700px"
+              minHeight="150px"
               borderRadius="8px"
               border="2px solid black"
               src="/img/hbg_banner.jpeg"
               margin="auto"
             />
-            {isSmallerThan480 ? (
-              <Image m="auto" mt="3em" pb="1.5em" src="/img/HBG.png" />
-            ) : (
-              <Image
-                m="auto"
-                mt="3em"
-                pb="1.5em"
-                src="/img/HOUSE_BUILDER_GANG.png"
-              />
-            )}
-            <Box>
+            <Text
+              mt="35px"
+              mb="-25px"
+              fontFamily="minecraft"
+              fontSize="60px"
+              color="white"
+              lineHeight="normal"
+              bgImage="url(/img/endstone.png)"
+              bgSize="25px"
+              sx={{
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              {isSmallerThan480 ? "HBG" : "HBG MCSR"}
+            </Text>
+            <Box display="flex" justifyContent="center">
               <FaTwitter
                 onClick={() => {
                   window.open("https://twitter.com/hbg_mc");
                 }}
                 cursor="pointer"
                 size={32}
-                style={{ margin: "auto" }}
+                style={{ margin: "10px" }}
                 color="#1DA1F2"
+              />
+              <FaDiscord
+                onClick={() => {
+                  window.open("https://discord.com/invite/zwhfSEwPnw");
+                }}
+                cursor="pointer"
+                size={32}
+                style={{ margin: "10px" }}
+                color="#5865F2"
               />
             </Box>
           </Box>
         </Flex>
-        <Box backgroundImage="url(/img/stone4.jpg)" pb="2em">
-          <Image m="auto" p="3em" src="/img/members.png" />
-          <Flex m="auto" maxW="1280px" flexWrap="wrap" justifyContent="center">
-            {liveData.map((member) => {
+        <Box
+          backgroundImage="url(/img/netherbrick.jpg)"
+          backgroundSize="50px"
+          pb="24px"
+        >
+          {/* <Image m="auto" p="3em" src="/img/members.png" /> */}
+          <Flex
+            m="auto"
+            pt="36px"
+            maxWidth="800px"
+            flexWrap="wrap"
+            justifyContent="center"
+          >
+            {liveData.map((member: Member) => {
               const isLive =
                 liveChannels.findIndex(
                   (channel: string) => channel === member.twitch
@@ -82,15 +90,30 @@ const Index = ({ liveData, liveChannels }) => {
               return (
                 <Box key={member.name} mb="2em">
                   <Box textAlign="center">
-                    <Text fontWeight="bold" color="white">
+                    <Text
+                      fontFamily="minecraft"
+                      fontWeight="bold"
+                      color="white"
+                      lineHeight="normal"
+                      bgImage="url(/img/lava.png)"
+                      bgSize="50px"
+                      sx={{
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    >
                       {member.name}
                     </Text>
                   </Box>
-                  <Link href={`/member/${member.name}`}>
+                  <Link href={`/member/${member.name.toLowerCase()}`}>
                     <Box
                       cursor="pointer"
                       textAlign="center"
-                      backgroundImage={`/img/avatars/${member.twitter}.jpg`}
+                      backgroundImage={
+                        profileImages[member.twitch]
+                          ? `url(${profileImages[member.twitch]})`
+                          : undefined
+                      }
                       backgroundSize="cover"
                       p=".5em"
                       m="0em 1em"
@@ -107,13 +130,6 @@ const Index = ({ liveData, liveChannels }) => {
                       )}
                     </Box>
                   </Link>
-                  <Box>
-                    <MediaButtons
-                      twitter={member.twitter}
-                      youtube={member.youtube}
-                      twitch={member.twitch}
-                    />
-                  </Box>
                 </Box>
               );
             })}
@@ -123,9 +139,10 @@ const Index = ({ liveData, liveChannels }) => {
           as="footer"
           mx="auto"
           width="100%"
-          py="12"
+          py="5"
           px={{ base: "4", md: "8" }}
           backgroundImage="url(/img/mossy.jpg)"
+          backgroundSize="50px"
         ></Box>
       </Box>
     </>
@@ -134,12 +151,34 @@ const Index = ({ liveData, liveChannels }) => {
 
 export default Index;
 
-export const getServerSideProps: GetServerSideProps = async ({}) => {
-  const memberTwitchLogins = memberList.map((member) => {
-    return member.twitch;
-  });
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const protocol = context.req.headers.host?.startsWith("localhost")
+    ? "http"
+    : "https";
+  const host = context.req.headers.host;
+  const res = await fetch(`${protocol}://${host}/api/members`);
+  const members = await res.json();
 
-  const getTwitchData = async (accessToken: any) => {
+  const memberTwitchLogins = members.map((member) => member.twitch);
+
+  const handleTokenExpired = async (): Promise<string> => {
+    const { data } = await axios.post(
+      "https://id.twitch.tv/oauth2/token",
+      null,
+      {
+        params: {
+          grant_type: "refresh_token",
+          refresh_token: process.env.TWITCH_REFRESH_TOKEN!,
+          client_id: process.env.TWITCH_CLIENT_ID!,
+          client_secret: process.env.TWITCH_SECRET!,
+        },
+      }
+    );
+
+    return data.access_token;
+  };
+
+  const getTwitchData = async (accessToken: string): Promise<any[]> => {
     try {
       const { data: response } = await axios.get(
         "https://api.twitch.tv/helix/streams",
@@ -148,56 +187,63 @@ export const getServerSideProps: GetServerSideProps = async ({}) => {
             user_login: memberTwitchLogins,
           },
           headers: {
-            Authorization: "Bearer " + accessToken,
-            ["client-id"]: process.env.TWITCH_CLIENT_ID,
+            Authorization: `Bearer ${accessToken}`,
+            "client-id": process.env.TWITCH_CLIENT_ID!,
           },
         }
       );
-
       return response.data;
-    } catch (err) {
-      console.log("err", err);
-      // call handleTokenExpired if caught
-    }
-  };
-
-  const handleTokenExpired = async () => {
-    await axios
-      .post("https://id.twitch.tv/oauth2/token", {
-        params: {
-          grant_type: "refresh_token",
-          refresh_token: "Vgq8U7Iq32kuiawKyYss",
-          client_id: process.env.TWITCH_CLIENT_ID,
-          client_secret: process.env.TWITCH_SECRET,
-        },
-      })
-      .then((response: any) => {
-        getTwitchData(response.accessToken);
-      });
-  };
-
-  const liveData = await getTwitchData("yk81a0a27h7j4m7aqxh9mgt5uvm750");
-
-  const liveChannels: String[] = liveData.map((streamData: any) => {
-    return streamData.user_login;
-  });
-
-  const promote = (members: Member[]) => {
-    for (let i = 0; i < members.length; i++) {
-      if (liveChannels.indexOf(members[i].twitch) >= 0) {
-        const x = members.splice(i, 1);
-        members.unshift(x[0]);
+    } catch (err: any) {
+      if (err.response?.status === 401) {
+        const newAccessToken = await handleTokenExpired();
+        return getTwitchData(newAccessToken);
       }
+      console.error("Twitch API error:", err.message);
+      return [];
     }
-    return members;
   };
 
-  const membersLiveSorted = promote(memberList);
+  const getUserProfiles = async (accessToken: string, logins: string[]) => {
+    const { data } = await axios.get("https://api.twitch.tv/helix/users", {
+      params: { login: logins },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Client-Id": process.env.TWITCH_CLIENT_ID!,
+      },
+    });
+
+    return data.data;
+  };
+
+  const accessToken = process.env.TWITCH_ACCESS_TOKEN!;
+
+  const liveData = await getTwitchData(accessToken);
+  const liveChannels = liveData.map((streamData: any) => streamData.user_login);
+  const promote = (members: Member[]): Member[] => {
+    const live = members.filter((m) => liveChannels.includes(m.twitch));
+    const offline = members.filter((m) => !liveChannels.includes(m.twitch));
+
+    const shuffledLive = shuffle(live);
+    const shuffledOffline = shuffle(offline);
+
+    return [...shuffledLive, ...shuffledOffline];
+  };
+
+  const membersLiveSorted = promote(members);
+
+  const userProfiles = await getUserProfiles(accessToken, memberTwitchLogins);
+
+  const profileImages: Record<string, string> = {};
+  userProfiles.forEach((user) => {
+    profileImages[user.login] = user.profile_image_url;
+  });
 
   return {
     props: {
       liveData: membersLiveSorted,
       liveChannels,
+      profileImages,
+      members,
     },
   };
 };

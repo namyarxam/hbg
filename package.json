@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "refresh:twitch": "node refresh-twitch-token.js"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.0",
@@ -11,6 +12,7 @@
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "axios": "^0.21.1",
+    "dotenv": "^17.2.0",
     "framer-motion": "^4.0.3",
     "next": "latest",
     "next-images": "^1.8.1",

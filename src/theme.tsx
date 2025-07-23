@@ -1,7 +1,13 @@
+// theme.tsx
 import { extendTheme } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 
-const fonts = { mono: `'Menlo', monospace` };
+const fonts = {
+  mono: `'Menlo', monospace`,
+  heading: `'Menlo', monospace`,
+  body: `'Menlo', monospace`,
+  minecraft: `'Minecraftia', monospace`, // 🔥 custom
+};
 
 const breakpoints = createBreakpoints({
   sm: "40em",
@@ -14,9 +20,17 @@ const theme = extendTheme({
   styles: {
     global: {
       "html, body": {
-        backgroundColor: '#1B202C'
-      }
-    }
+        backgroundColor: "#1B202C",
+      },
+      "@font-face": [
+        {
+          fontFamily: "Minecraftia",
+          src: "url('/fonts/Minecraftia.ttf') format('truetype')",
+          fontWeight: "normal",
+          fontStyle: "normal",
+        },
+      ],
+    },
   },
   fonts,
   breakpoints,
