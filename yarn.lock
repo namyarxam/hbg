@@ -478,6 +478,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@netlify/plugin-nextjs@npm:^5.11.6":
+  version: 5.11.6
+  resolution: "@netlify/plugin-nextjs@npm:5.11.6"
+  checksum: 10c0/fc58bc8287b3a3fcbfbe57cea8fdf187f4b56e88903d98f1b9bc44512e606beb82d80f8bfa80fe9e00938db7d7283a9079d9c77b3094fbe3bbb4204bbc34900c
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:13.5.6":
   version: 13.5.6
   resolution: "@next/env@npm:13.5.6"
@@ -1479,6 +1486,7 @@ __metadata:
     "@chakra-ui/react": "npm:^2.8.2"
     "@emotion/react": "npm:^11.11.1"
     "@emotion/styled": "npm:^11.11.0"
+    "@netlify/plugin-nextjs": "npm:^5.11.6"
     "@types/node": "npm:^16.4.3"
     "@types/react": "npm:^19.1.8"
     "@types/react-dom": "npm:^19.1.6"
